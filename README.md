@@ -175,13 +175,12 @@ DB_PASSWORD=mysql123
 DB_NAME=school
 DB_PORT=3306
 
-PORT=5000
 ```
 
 Explanation:
 
 * DB_HOST=localhost → MySQL is running on your laptop
-* PORT=5000 → Express will listen on port 5000
+* Express will listen on port 3500
 
 Start the backend:
 
@@ -190,7 +189,7 @@ npm start
 ```
 
 ```bash
-curl http://localhost:5000
+curl http://localhost:3500
 ```
 
 ---
@@ -212,7 +211,7 @@ npm install
 you will find `.env` file inside the frontend directory:
 
 ```env
-REACT_APP_API_URL=http://localhost:5000
+REACT_APP_API_URL=http://localhost:3500
 ```
 
 Explanation:
@@ -233,7 +232,7 @@ Open in your browser:
 ## 7. How communication works locally
 
 * React runs on: localhost:3000
-* Express runs on: localhost:5000
+* Express runs on: localhost:3500
 * MySQL runs on: localhost:3306
 
 Flow:
@@ -255,7 +254,7 @@ Example:
 
 Frontend API URL becomes:
 
-http://EC2_PUBLIC_IP:5000
+http://EC2_PUBLIC_IP:3500
 
 Backend DB host remains:
 
