@@ -60,7 +60,7 @@ Inside the MySQL shell, run:
 
 ```sql
 ALTER USER 'root'@'localhost'
-IDENTIFIED WITH mysql_native_password BY 'your_password_here';
+IDENTIFIED WITH mysql_native_password BY 'mysql123';
 
 FLUSH PRIVILEGES;
 ```
@@ -314,9 +314,9 @@ This section explains how to enter the running MySQL container and create the re
 
 From your project root:
 
-
-docker ps
-
+```bash
+    docker ps
+```
 
 You should see a container named:
 
@@ -328,9 +328,9 @@ mysql-container
 
 Run:
 
-
-docker exec -it mysql-container mysql -u root -p
-
+```bash
+    docker exec -it mysql-container mysql -u root -p
+```
 
 When prompted, enter the root password you defined in docker‑compose:
 
@@ -354,15 +354,15 @@ MYSQL_DATABASE=school
 
 Select it:
 
-sql
+```sql
 USE school;
-
+```
 
 ### Step 4 – Create the tables
 
 Run the following SQL commands:
 
-sql
+```sql
 CREATE TABLE IF NOT EXISTS student (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(40),
@@ -377,13 +377,13 @@ CREATE TABLE IF NOT EXISTS teacher (
   class VARCHAR(16)
 );
 
+```
 
 ### Step 5 – Verify the tables
 
-sql
+```sql
 SHOW TABLES;
-
-
+```
 You should see:
 
 
@@ -393,9 +393,9 @@ teacher
 
 ### Step 6 – Exit the database
 
-sql
+```sql
 exit
-
+```
 
 ### Important note about persistence
 
