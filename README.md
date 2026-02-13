@@ -13,9 +13,9 @@ The goal is to run everything on your laptop before moving to containers.
 ## Architecture (Local Machine)
 
 Browser  →  React (localhost:3000)
-↓
+→
 Express API (localhost:5000)
-↓
+→
 MySQL Server (localhost:3306)
 
 In local development, **localhost means your laptop**.
