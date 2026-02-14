@@ -14,7 +14,7 @@ The goal is to run everything on your laptop before moving to containers.
 
 Browser  →  React (localhost:3000)
 →
-Express API (localhost:5000)
+Express API (localhost:3500)
 →
 MySQL Server (localhost:3306)
 
