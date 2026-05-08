@@ -37,6 +37,7 @@ services:
       - MYSQL_ROOT_PASSWORD=mysql123
       - MYSQL_DATABASE=school
     volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - mysql-data:/var/lib/mysql
     networks:
       - three-tier-net
