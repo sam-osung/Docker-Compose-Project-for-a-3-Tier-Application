@@ -305,92 +305,53 @@ Before you begin, make sure you have the following installed:
 
     Open your favourite browser and visit http://localhost:80. Explore the MERN stack application!
 
-## Create Tables Manually by Exec Into MySQL Container
+## Automatic Table Creation via init.sql
 
-This section explains how to enter the running MySQL container and create the required tables for the application.
+The required database tables are automatically created when the MySQL container starts, because of the `init.sql` file.
 
-### Step 1 – Make sure the database container is running
+### How it works
 
-From your project root:
+The `docker-compose.yml` file mounts the `init.sql` file as the MySQL initialization script:
 
-```bash
-    docker ps
+```yaml
+volumes:
+  - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 ```
 
-You should see a container named:
+When the MySQL container starts for the first time, Docker automatically executes this script, creating the `student` and `teacher` tables in the `school` database.
 
+### Verify the tables (Optional)
 
-mysql-container
-
-
-### Step 2 – Exec into the MySQL container
-
-Run:
+If you want to verify that the tables were created successfully, you can exec into the MySQL container:
 
 ```bash
-    docker exec -it mysql-container mysql -u root -p
+docker exec -it mysql-container mysql -u root -p school
 ```
 
-When prompted, enter the root password you defined in docker‑compose:
+When prompted, enter the root password:
 
-
+```
 mysql123
-
-
-You should now see:
-
-
-mysql>
-
-
-### Step 3 – Select the database
-
-The database is created automatically because of the following setting in docker‑compose:
-
-
-MYSQL_DATABASE=school
-
-
-Select it:
-
-```sql
-USE school;
 ```
 
-### Step 4 – Create the tables
-
-Run the following SQL commands:
-
-```sql
-CREATE TABLE IF NOT EXISTS student (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(40),
-  roll_number INT,
-  class VARCHAR(16)
-);
-
-CREATE TABLE IF NOT EXISTS teacher (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(40),
-  subject VARCHAR(40),
-  class VARCHAR(16)
-);
-
-```
-
-### Step 5 – Verify the tables
+Then run:
 
 ```sql
 SHOW TABLES;
 ```
+
 You should see:
 
+```
++------------------+
+| Tables_in_school |
++------------------+
+| student          |
+| teacher          |
++------------------+
+```
 
-student
-teacher
-
-
-### Step 6 – Exit the database
+Exit:
 
 ```sql
 exit
@@ -400,17 +361,15 @@ exit
 
 Because your MySQL service uses this volume:
 
-
 - mysql-data:/var/lib/mysql
 
+The database and tables are stored permanently.
 
-The tables are stored permanently.
+**First time initialization**: Tables are created automatically from `init.sql` when the MySQL container starts for the first time.
 
-You only need to create the tables once.
+**Subsequent runs**: If the container is deleted and recreated using the same volume, the tables will still be available and the `init.sql` script will not re-create them (since the tables already exist).
 
-If the container is deleted and recreated using the same volume, the tables will still be available.
-
-The tables will only be lost if you remove the volume, for example:
+**Removing data**: The tables and data will only be lost if you remove the volume, for example:
 
 ```bash
 docker compose down -v
