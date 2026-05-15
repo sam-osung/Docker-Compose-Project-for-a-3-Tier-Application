@@ -48,9 +48,13 @@ You should see: active (running).
 
 ---
 
-## 2. Set MySQL root password (important)
+## 2. Set MySQL root password (important) 
+
 
 Login using the local system account:
+
+**Note for MySQL 9.0+:** Navigate to `/etc/mysql/mysql.conf.d/mysqld.cnf` and comment out the line `mysql_native_password=ON`. Native password is not enabled by default on newer versions of Mysql.
+
 
 ```bash
 sudo mysql
@@ -90,7 +94,7 @@ mysql -u root -p
 Create database and tables:
 
 ```sql
-CREATE DATABASE school;
+CREATE DATABASE school;  
 
 USE school;
 
