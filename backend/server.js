@@ -8,7 +8,23 @@ const { createPool } = require('mysql2/promise');
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+
+const allowedOrigins = new Set(
+    (process.env.CORS_ORIGINS || 'http://localhost,http://localhost:3000,https://joybassey.online')
+        .split(',')
+        .map((origin) => origin.trim())
+        .filter(Boolean)
+);
+
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.has(origin)) {
+            return callback(null, true);
+        }
+
+        return callback(new Error(`CORS origin not allowed: ${origin}`));
+    }
+}));
 
 const db = createPool({
     host: process.env.MYSQL_HOST,       // matches Docker Compose
